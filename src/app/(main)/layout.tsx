@@ -1,12 +1,16 @@
 import Sidebar from "@/components/SideBar";
 import Footer from "../footer";
+import LoadCurrentSidebar from "@/components/LoadCurrentSidebar";
+import ErrorHandler from "@/components/ErrorComponent";
 
-export default function MainLayout({ children }) {
+export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Sidebar/>
-    {children}
-    <Footer />
-  </>
-  )
+      <Sidebar />
+      <LoadCurrentSidebar />
+      <ErrorHandler />
+      {children}
+      <Footer />
+    </>
+  );
 }

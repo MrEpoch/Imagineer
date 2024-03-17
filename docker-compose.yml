@@ -1,0 +1,39 @@
+version: '3'
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+      - .env.local
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_NAME}
+      # Add other environment variables as needed for Prisma configuration
+    depends_on:
+      - database
+
+  database:
+    image: postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    container_name: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  cache:
+    driver: local
+

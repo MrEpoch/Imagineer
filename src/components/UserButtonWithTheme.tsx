@@ -1,11 +1,15 @@
-'use client';
+"use client";
 
 import { UserButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { dark } from "@clerk/themes";
 import { useEffect, useState } from "react";
 
-export default function UserButtonWithTheme({ buttonClass }: { buttonClass: string }) {
+export default function UserButtonWithTheme({
+  buttonClass,
+}: {
+  buttonClass: string;
+}) {
   const { theme } = useTheme();
   const [darkTheme, setDarkTheme] = useState(false);
 
@@ -16,11 +20,17 @@ export default function UserButtonWithTheme({ buttonClass }: { buttonClass: stri
         setDarkTheme(true);
       }
     }
-  }, [])
+  }, []);
 
   return (
     <div className={buttonClass}>
-      <UserButton afterSignOutUrl="/" userProfileProps={{ appearance: { baseTheme: darkTheme ? dark : undefined } }} appearance={{ baseTheme: darkTheme ? dark : undefined }} />
+      <UserButton
+        afterSignOutUrl="/"
+        userProfileProps={{
+          appearance: { baseTheme: darkTheme ? dark : undefined },
+        }}
+        appearance={{ baseTheme: darkTheme ? dark : undefined }}
+      />
     </div>
-  )
+  );
 }

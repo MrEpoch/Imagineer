@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { SignIn } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
@@ -16,11 +16,11 @@ export default function ThemeSignIn() {
         setDarkTheme(true);
       }
     }
-  }, [])
+  }, []);
 
   return (
     <>
-    <SignIn appearance={{ baseTheme: darkTheme ? dark : undefined }} />
-  </>
-  )
+      <SignIn appearance={{ baseTheme: darkTheme ? dark : undefined }} />
+    </>
+  );
 }
