@@ -3,7 +3,11 @@ import Footer from "../footer";
 import LoadCurrentSidebar from "@/components/LoadCurrentSidebar";
 import ErrorHandler from "@/components/ErrorComponent";
 
-export default function MainLayout({ children }: { children: React.ReactNode }) {
+export default function MainLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Sidebar />

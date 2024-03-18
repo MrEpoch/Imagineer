@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useSidebar } from "@/providers/SidebarProvider";
 import { usePathname } from "next/navigation";
@@ -11,7 +11,7 @@ export default function LoadCurrentSidebar() {
   useEffect(() => {
     setCurrentPageHandler(pathname);
     console.log(pathname);
-  }, [pathname])
+  }, [pathname]);
 
-  return <></>
+  return <></>;
 }

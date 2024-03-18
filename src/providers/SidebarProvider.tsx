@@ -28,9 +28,7 @@ export default function MySidbarContextProvider({
 
   return (
     <MySidebarContext.Provider value={{ currentPage, setCurrentPageHandler }}>
-    
       {children}
     </MySidebarContext.Provider>
   );
 }
-

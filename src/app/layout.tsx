@@ -18,13 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ variables: { colorPrimary: "#0ea5e9" }, elements: { card: "dark:bg-darkmode-800" } }}>
+    <ClerkProvider
+      appearance={{
+        variables: { colorPrimary: "#0ea5e9" },
+        elements: { card: "dark:bg-darkmode-800" },
+      }}
+    >
       <html suppressHydrationWarning lang="en">
         <body className={inter.className}>
           <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-            <SidebarProvider>
-            {children}
-        </SidebarProvider>
+            <SidebarProvider>{children}</SidebarProvider>
           </ThemeProvider>
         </body>
       </html>
