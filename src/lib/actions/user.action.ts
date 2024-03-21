@@ -1,11 +1,26 @@
 "use server";
 
-import { User } from "@prisma/client";
 import { prisma } from "../db";
 import { revalidatePath } from "next/cache";
 import { handleError } from "../handleError";
 
-export async function createUser(user: User, url: string) {
+interface UserCreate {
+  email: string;
+  username: string;
+  lastName: string;
+  firstName: string;
+  clerkId: string;
+  photo: string;
+}
+
+interface UserUpdate {
+  username: string;
+  lastName: string;
+  firstName: string;
+  photo: string;
+}
+
+export async function createUser(user: UserCreate) {
   try {
     const newUser = await prisma.user.create({
       data: {
@@ -14,7 +29,7 @@ export async function createUser(user: User, url: string) {
     });
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    handleError("user-exists", url);
+    throw new Error("Failed to create user: " + error);
   }
 }
 
@@ -34,7 +49,7 @@ export async function getUserById(id: string, url: string) {
   }
 }
 
-export async function updateUser(clerkId: string, user: User, url: string) {
+export async function updateUser(clerkId: string, user: UserUpdate) {
   try {
     const updatedUser = await prisma.user.update({
       where: {
@@ -45,15 +60,15 @@ export async function updateUser(clerkId: string, user: User, url: string) {
       },
     });
 
-    if (!updatedUser) handleError("user-update-failed", url);
+    if (!updatedUser) throw new Error("");
 
     return JSON.parse(JSON.stringify(updateUser));
   } catch (e) {
-    handleError("user-update-failed", url);
+    throw new Error("Failed to update user: " + e);
   }
 }
 
-export async function deleteUser(clerkId: string, url: string) {
+export async function deleteUser(clerkId: string) {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -61,7 +76,7 @@ export async function deleteUser(clerkId: string, url: string) {
       },
     });
 
-    if (!user) handleError("user-not-found", url);
+    if (!user) throw new Error("User not found");
 
     const deletedUser = await prisma.user.delete({
       where: {
@@ -73,7 +88,7 @@ export async function deleteUser(clerkId: string, url: string) {
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (e) {
-    handleError("user-delete-failed", url);
+    throw new Error("Failed to delete user: " + e);
   }
 }
 
