@@ -33,7 +33,7 @@ export async function createUser(user: UserCreate) {
   }
 }
 
-export async function getUserById(id: string, url: string) {
+export async function getUserById(id: string) {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -41,11 +41,11 @@ export async function getUserById(id: string, url: string) {
       },
     });
 
-    if (!user) handleError("user-not-found", url);
+    if (!user) throw new Error("");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
-    handleError("user-not-found", url);
+    throw new Error("Failed to get user: " + error);
   }
 }
 

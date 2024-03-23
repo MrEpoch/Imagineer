@@ -1,7 +1,8 @@
-import Sidebar from "@/components/SideBar";
+import { Sidebar } from "@/components/SideBar";
 import Footer from "../footer";
-import LoadCurrentSidebar from "@/components/LoadCurrentSidebar";
 import ErrorHandler from "@/components/ErrorComponent";
+import SidebarControlTop from "@/components/SidebarControlTop";
+import LoadCurrentSidebar from "@/components/LoadCurrentSidebar";
 
 export default function MainLayout({
   children,
@@ -9,12 +10,15 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <Sidebar />
-      <LoadCurrentSidebar />
+    <main className="relative min-h-screen h-full dark:text-white text-black dark:bg-background w-full flex flex-col">
       <ErrorHandler />
-      {children}
-      <Footer />
-    </>
+      <LoadCurrentSidebar />
+      <Sidebar className="dark:bg-background border-r border-zinc-100 w-full md:w-80 dark:border-border fixed dark:text-white text-gray-700" />
+      <div id="content" className="md:ml-80">
+        <SidebarControlTop />
+        {children}
+        <Footer />
+      </div>
+    </main>
   );
 }

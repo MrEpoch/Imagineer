@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main className="min-h-screen w-full bg-white dark:bg-darkmode-900">
-      <div className="flex justify-center items-center h-full"></div>
+    <main className="min-h-screen w-full">
+      <div className="max-w-screen-xl mx-auto py-8">Text</div>
     </main>
   );
 }

@@ -4,10 +4,8 @@ import Logo from "@/assets/Logo.png";
 
 export default function Footer() {
   return (
-    <footer className="p-4 bg-white md:p-8 lg:p-10 dark:bg-darkmode-900">
-      {/* divider */}
-      <hr className="my-6 sm:mx-16 border-darkmode-200 dark:border-darkmode-700" />
-      <div className="mx-auto max-w-screen-xl text-center">
+    <footer className="w-full z-0 border-t border-zinc-100 dark:border-border bg-white dark:bg-background">
+      <div className="py-4 mx-auto max-w-screen-xl text-center">
         <a
           href="#"
           className="flex justify-center items-center text-2xl font-semibold text-darkmode-900 dark:text-white"

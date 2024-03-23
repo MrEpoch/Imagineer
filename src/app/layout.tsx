@@ -21,7 +21,7 @@ export default function RootLayout({
     <ClerkProvider
       appearance={{
         variables: { colorPrimary: "#0ea5e9" },
-        elements: { card: "dark:bg-darkmode-800" },
+        elements: { card: "dark:bg-gradient" },
       }}
     >
       <html suppressHydrationWarning lang="en">
