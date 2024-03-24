@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   nextjs:
     build:
@@ -36,4 +36,3 @@ volumes:
   pgdata:
   cache:
     driver: local
-
