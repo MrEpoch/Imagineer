@@ -4,15 +4,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/comp-ui/ui/button";
 import { Form } from "@/comp-ui/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/comp-ui/ui/select";
 import { Input } from "@/comp-ui/ui/input";
 import CustomField from "./CustomField";
 import { useState, useTransition } from "react";
@@ -21,6 +12,8 @@ import FillField from "./specific-form/Fill";
 import Remove from "./specific-form/Remove";
 import Recolor from "./specific-form/Recolor";
 import { debounce, deepMergeObjects } from "@/lib/utils";
+import { updateCredits } from "@/lib/actions/user.action";
+import ImageUpload from "./specific-form/ImageUpload";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -35,9 +28,10 @@ export default function TransformationForm({
   data = null,
   userId,
   type,
-  config = null
+  config = null,
 }: any) {
-  const transformationType = transformationTypes[type as keyof typeof transformationTypes];
+  const transformationType =
+    transformationTypes[type as keyof typeof transformationTypes];
   const initVal =
     data && action === "Update"
       ? {
@@ -94,7 +88,16 @@ export default function TransformationForm({
 
   function onTransformHandler() {
     setIsTransforming(true);
-    
+
+    setTransformationConfig(
+      deepMergeObjects(transformationConfig, newTransformation),
+    );
+
+    setNewTransformation(null);
+
+    startTransition(async () => {
+      // await updateCredits(userId, );
+    });
   }
 
   function onInputChangeHandler(
@@ -103,14 +106,16 @@ export default function TransformationForm({
     type: string,
     onChangeField: (value: string) => void,
   ) {
-    debounce(()=>{
+    // I never before saw someone using square brackets for an object in this way
+
+    debounce(() => {
       setNewTransformation((prevState: any) => ({
         prevState,
-        [type]: { 
+        [type]: {
           ...prevState?.[type],
-          [fieldName === "prompt" ? "prompt" : "to"] : value
+          [fieldName === "prompt" ? "prompt" : "to"]: value,
         },
-      }))
+      }));
     }, 1000);
   }
 
@@ -142,11 +147,30 @@ export default function TransformationForm({
             )}
           </div>
         )}
+
+        <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2">
+          <ImageUpload
+            form={form}
+            setImage={setImage}
+            image={image}
+            type={type}
+          />
+        </div>
+
         <div className="flex flex-col gap-4">
-          <Button disabled={isTransforming || newTransformation === null} onClick={onTransformHandler} type="button" className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px]">
+          <Button
+            disabled={isTransforming || newTransformation === null}
+            onClick={onTransformHandler}
+            type="button"
+            className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px]"
+          >
             {isTransforming ? "Transforming..." : "Apply transformation"}
           </Button>
-          <Button disabled={isSubmitting} type="submit" className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px]">
+          <Button
+            disabled={isSubmitting}
+            type="submit"
+            className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px]"
+          >
             {isSubmitting ? "Submitting..." : "Save Image"}
           </Button>
         </div>

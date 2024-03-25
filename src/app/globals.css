@@ -46,4 +46,12 @@
   * {
     @apply border-border;
   }
+
+  .popup-box {
+    @apply bg-primary !important;
+  }
+
+  .br0 {
+    @apply bg-primary;
+  }
 }

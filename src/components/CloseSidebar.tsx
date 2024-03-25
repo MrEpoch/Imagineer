@@ -11,7 +11,7 @@ export default function CloseSidebar() {
   return (
     <button
       onClick={hideSidebar}
-      className="z-50 mt-[10px] w-10 h-10 flex justify-center items-center rounded-full  hover:bg-darkmode-800"
+      className="z-50 fixed md:relative mt-[10px] w-10 h-10 flex justify-center items-center rounded-full  hover:bg-darkmode-800"
     >
       <Menu />
     </button>

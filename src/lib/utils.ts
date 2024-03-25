@@ -41,16 +41,12 @@ const toBase64 = (str: string) =>
     : window.btoa(str);
 
 export const dataUrl = `data:image/svg+xml;base64,${toBase64(
-  shimmer(1000, 1000)
+  shimmer(1000, 1000),
 )}`;
 // ==== End
 
 // FORM URL QUERY
-export const formUrlQuery = ({
-  searchParams,
-  key,
-  value,
-}: any) => {
+export const formUrlQuery = ({ searchParams, key, value }: any) => {
   const params = { ...qs.parse(searchParams.toString()), [key]: value };
 
   return `${window.location.pathname}?${qs.stringify(params, {
@@ -59,10 +55,7 @@ export const formUrlQuery = ({
 };
 
 // REMOVE KEY FROM QUERY
-export function removeKeysFromQuery({
-  searchParams,
-  keysToRemove,
-}: any) {
+export function removeKeysFromQuery({ searchParams, keysToRemove }: any) {
   const currentUrl = qs.parse(searchParams);
 
   keysToRemove.forEach((key) => {
@@ -71,7 +64,7 @@ export function removeKeysFromQuery({
 
   // Remove null or undefined values
   Object.keys(currentUrl).forEach(
-    (key) => currentUrl[key] == null && delete currentUrl[key]
+    (key) => currentUrl[key] == null && delete currentUrl[key],
   );
 
   return `${window.location.pathname}?${qs.stringify(currentUrl)}`;
@@ -90,12 +83,13 @@ export const debounce = (func: (...args: any[]) => void, delay: number) => {
 export const getImageSize = (
   type: string,
   image: any,
-  dimension: "width" | "height"
+  dimension: "width" | "height",
 ): number => {
   if (type === "fill") {
     return (
-      aspectRatioOptions[image.aspectRatio as keyof typeof aspectRatioOptions]?.[dimension] ||
-      1000
+      aspectRatioOptions[
+        image.aspectRatio as keyof typeof aspectRatioOptions
+      ]?.[dimension] || 1000
     );
   }
   return image?.[dimension] || 1000;
@@ -124,7 +118,7 @@ export const download = (url: string, filename: string) => {
 
 // DEEP MERGE OBJECTS
 export const deepMergeObjects = (obj1: any, obj2: any) => {
-  if(obj2 === null || obj2 === undefined) {
+  if (obj2 === null || obj2 === undefined) {
     return obj1;
   }
 

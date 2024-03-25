@@ -5,7 +5,6 @@ import Logo from "@/assets/Logo.png";
 import { sidebar } from "@/lib/constant";
 import SidebarLinks from "./SidebarLinks";
 import UserButtonWithTheme from "./UserButtonWithTheme";
-import CloseSidebar from "./CloseSidebar";
 
 export function Sidebar({ className }: { className: string }) {
   return (

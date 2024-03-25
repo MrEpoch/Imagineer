@@ -57,39 +57,43 @@ export const transformationTypes = {
     title: "Image Restore",
     description: "Restore the image to its original state",
     type: "restore",
-    config: { restore: true }
+    config: { restore: true },
   },
   "generative-fill": {
     title: "Generative Fill",
     description: "Fill blanks in the image",
     type: "fill",
-    config: { fillBackground: true }
+    config: { fillBackground: true },
   },
   "object-remove": {
     title: "Object Remove",
     description: "Remove the object from the image",
     type: "remove",
-    config: { remove: {
-      prompt: "",
-      multiple: true,
-      removeShadow: true
-    }}
+    config: {
+      remove: {
+        prompt: "",
+        multiple: true,
+        removeShadow: true,
+      },
+    },
   },
   "object-recolor": {
     title: "Object Recolor",
     description: "Recolor the object in the image",
     type: "recolor",
-    config: { recolor: {
-      prompt: "",
-      multiple: true,
-      to: ""
-    }}
+    config: {
+      recolor: {
+        prompt: "",
+        multiple: true,
+        to: "",
+      },
+    },
   },
   "background-remove": {
     title: "Background Remove",
     description: "Remove the background from the image",
     type: "removeBackground",
-    config: { removeBackground: true }
+    config: { removeBackground: true },
   },
 };
 
