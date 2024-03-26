@@ -1,8 +1,16 @@
 import React from "react";
 import CustomField from "../CustomField";
 import MediaUploader from "../MediaUploader";
+import TransformedImage from "../TransformedImage";
 
-export default function ImageUpload({ form, setImage, image, type }) {
+export default function ImageUpload({
+  form,
+  setImage,
+  image,
+  type,
+  setIsTransforming,
+  transformationConfig,
+}) {
   return (
     <>
       <CustomField
@@ -18,6 +26,14 @@ export default function ImageUpload({ form, setImage, image, type }) {
             type={type}
           />
         )}
+      />
+      <TransformedImage
+        image={image}
+        type={type}
+        title={form.getValues().title}
+        isTransforming={setIsTransforming}
+        transformationConfig={transformationConfig}
+        setIsTransforming={setIsTransforming}
       />
     </>
   );

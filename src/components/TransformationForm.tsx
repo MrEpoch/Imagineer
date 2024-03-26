@@ -154,6 +154,8 @@ export default function TransformationForm({
             setImage={setImage}
             image={image}
             type={type}
+            setIsTransforming={setIsTransforming}
+            transformationConfig={transformationConfig}
           />
         </div>
 
