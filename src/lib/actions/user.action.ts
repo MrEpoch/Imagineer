@@ -95,7 +95,6 @@ export async function deleteUser(clerkId: string) {
 export async function updateCredits(
   id: string,
   creditFee: number,
-  url: string,
 ) {
   try {
     const updatedUserCredits = await prisma.user.update({
@@ -109,10 +108,10 @@ export async function updateCredits(
       },
     });
 
-    if (!updatedUserCredits) handleError("user-credit-update-failed", url);
+    if (!updatedUserCredits) throw new Error("");
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (e) {
-    handleError("user-credit-update-failed", url);
+    throw Error("Failed to update user credits: " + e);
   }
 }

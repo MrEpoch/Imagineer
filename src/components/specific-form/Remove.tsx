@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import CustomField from "../CustomField";
 import { Input } from "@/comp-ui/ui/input";

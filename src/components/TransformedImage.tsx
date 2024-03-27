@@ -1,3 +1,4 @@
+'use client';
 import { dataUrl, debounce, getImageSize } from "@/lib/utils";
 import { Download, Shell } from "lucide-react";
 import { CldImage } from "next-cloudinary";
@@ -12,9 +13,10 @@ export default function TransformedImage({
   transformationConfig,
   isTransforming,
   setIsTransforming,
-  hasDownload = !false,
+  hasDownload = false,
 }) {
   function downloadHandler(e) {}
+  console.log(image, transformationConfig);
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,7 +33,7 @@ export default function TransformedImage({
           </button>
         )}
       </div>
-      {image?.publidId && transformationConfig ? (
+      {(image?.publicId && transformationConfig) ? (
         <div className="relative">
           <CldImage
             src={image?.publicId}

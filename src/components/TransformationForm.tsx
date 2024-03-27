@@ -14,6 +14,9 @@ import Recolor from "./specific-form/Recolor";
 import { debounce, deepMergeObjects } from "@/lib/utils";
 import { updateCredits } from "@/lib/actions/user.action";
 import ImageUpload from "./specific-form/ImageUpload";
+import { getCldImageUrl } from "next-cloudinary";
+import { addImage, updateImage } from "@/lib/actions/image.actions";
+import { useRouter } from "next/navigation";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -55,6 +58,7 @@ export default function TransformationForm({
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState<any>(config);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,9 +66,72 @@ export default function TransformationForm({
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    console.log(values);
+
+    if (data || image) {
+      const transformationUrl = getCldImageUrl({
+        src: image?.publicId,
+        width: image?.width,
+        height: image?.height,
+        ...transformationConfig
+      });
+
+      const imageData = {
+        title: values.title,
+        publicId: image?.publicId,
+        transformationType: transformationType.type,
+        width: image?.width,
+        height: image?.height,
+        config: transformationConfig,
+        secureUrl: image?.secureUrl,
+        transformationUrl: transformationUrl,
+        aspectRatio: values.aspectRatio,
+        prompt: values.prompt,
+        color: values.color
+      }
+
+      if (action === "add") {
+        try {
+          const newImage = await addImage({
+            image: imageData,
+            userId,
+            path: "/",
+          });
+
+          if (newImage) {
+            form.reset();
+            setImage(data);
+            router.push(`/transformations/${newImage.id}`);
+          }
+
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      if (action === "update") {
+        try {
+          const updatedImage = await updateImage({
+            image: {
+              ...imageData,
+              id: data.id
+            },
+            userId,
+            path: `/transformations/${data.id}`,
+          });
+
+          if (updatedImage) {
+            router.push(`/transformations/${updatedImage.id}`);
+          }
+
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
+
+    setIsSubmitting(false);
   }
 
   function onSelectFieldHandler(
@@ -96,7 +163,7 @@ export default function TransformationForm({
     setNewTransformation(null);
 
     startTransition(async () => {
-      // await updateCredits(userId, );
+      await updateCredits(userId, -1);
     });
   }
 
@@ -150,6 +217,7 @@ export default function TransformationForm({
 
         <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2">
           <ImageUpload
+            isTransforming={isTransforming}
             form={form}
             setImage={setImage}
             image={image}
