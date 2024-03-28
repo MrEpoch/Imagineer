@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "../db";
@@ -9,9 +9,9 @@ export async function addImage({ image, userId, path }: AddImageParams) {
   try {
     const author = await prisma.user.findUnique({
       where: {
-        id: userId
-      }
-    })
+        id: userId,
+      },
+    });
 
     if (!author) throw new Error("User not found");
 
@@ -20,11 +20,11 @@ export async function addImage({ image, userId, path }: AddImageParams) {
         ...image,
         author: {
           connect: {
-            id: userId
-          }
-        }
-      }
-    })
+            id: userId,
+          },
+        },
+      },
+    });
 
     revalidatePath(path);
 
@@ -36,24 +36,23 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 
 export async function updateImage({ image, userId, path }) {
   try {
-
     const author = await prisma.user.findUnique({
       where: {
-        id: userId
-      }
-    })
+        id: userId,
+      },
+    });
 
     if (!author) throw new Error("User not found");
 
     const updatedImage = await prisma.image.update({
       where: {
         id: image.id,
-        authorId: userId
+        authorId: userId,
       },
       data: {
-        ...image
-      }
-    })
+        ...image,
+      },
+    });
 
     if (!updatedImage) throw new Error("Image not found");
 
@@ -67,23 +66,21 @@ export async function updateImage({ image, userId, path }) {
 
 export async function deleteImage({ image, userId, path }) {
   try {
-
     const author = await prisma.user.findUnique({
       where: {
-        id: userId
-      }
-    })
+        id: userId,
+      },
+    });
 
     if (!author) throw new Error("User not found");
 
     const deletedImage = await prisma.image.delete({
       where: {
         id: image.id,
-        authorId: userId
-      }
-    })
+        authorId: userId,
+      },
+    });
     if (!deletedImage) throw new Error("Image not found");
-
   } catch (e) {
     throw new Error("Failed to delete image: " + e);
   } finally {
@@ -93,21 +90,20 @@ export async function deleteImage({ image, userId, path }) {
 
 export async function getImageById({ image, userId, path }) {
   try {
-    
     const author = await prisma.user.findUnique({
       where: {
-        id: userId
-      }
-    })
+        id: userId,
+      },
+    });
 
     if (!author) throw new Error("User not found");
 
     const getImage = await prisma.image.findUnique({
       where: {
         id: image.id,
-        authorId: userId
-      }
-    })
+        authorId: userId,
+      },
+    });
 
     if (!getImage) throw new Error("Image not found");
 

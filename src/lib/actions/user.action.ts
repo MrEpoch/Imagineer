@@ -2,7 +2,6 @@
 
 import { prisma } from "../db";
 import { revalidatePath } from "next/cache";
-import { handleError } from "../handleError";
 
 interface UserCreate {
   email: string;
@@ -39,7 +38,7 @@ export async function getUserById(id: string) {
       where: {
         clerkId: id,
       },
-    })
+    });
 
     if (!user) throw new Error("");
 
@@ -92,10 +91,7 @@ export async function deleteUser(clerkId: string) {
   }
 }
 
-export async function updateCredits(
-  id: string,
-  creditFee: number,
-) {
+export async function updateCredits(id: string, creditFee: number) {
   try {
     const updatedUserCredits = await prisma.user.update({
       where: {

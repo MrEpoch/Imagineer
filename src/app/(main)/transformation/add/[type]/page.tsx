@@ -25,21 +25,25 @@ export default async function page({
     redirect("/");
   }
 
-
   return (
     <main className="min-h-screen">
       <div className="max-w-screen-xl mx-auto py-8 px-4 flex flex-col gap-8">
-        <Header
-          title={transformation.title}
-          subtitle={transformation.description}
-        />
-        <div className="mt-10">
-          <TransformationForm
-            action="add"
-            userId={user.id}
-            type={type as keyof typeof transformationTypes}
-          />
-        </div>
+        {transformation && (
+          <>
+            <Header
+              title={transformation.title}
+              subtitle={transformation.description}
+            />
+            <div className="mt-10">
+              <TransformationForm
+                action="add"
+                userId={user.id}
+                creditBalance={user.creditBalance}
+                type={type as keyof typeof transformationTypes}
+              />
+            </div>
+          </>
+        )}
       </div>
     </main>
   );

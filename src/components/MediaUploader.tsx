@@ -25,7 +25,6 @@ export default function MediaUploader({
   const { toast } = useToast();
 
   function onUploadSuccessHandler(result: any) {
-
     console.log(result);
     setImage((prevState) => ({
       ...prevState,

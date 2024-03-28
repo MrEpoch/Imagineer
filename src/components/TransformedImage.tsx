@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { dataUrl, debounce, getImageSize } from "@/lib/utils";
 import { Download, Shell } from "lucide-react";
 import { CldImage } from "next-cloudinary";
@@ -33,7 +33,7 @@ export default function TransformedImage({
           </button>
         )}
       </div>
-      {(image?.publicId && transformationConfig) ? (
+      {image?.publicId && transformationConfig ? (
         <div className="relative">
           <CldImage
             src={image?.publicId}

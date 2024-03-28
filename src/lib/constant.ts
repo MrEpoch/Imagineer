@@ -17,27 +17,27 @@ export const sidebar = [
   },
   {
     title: "Image Restore",
-    href: "/transformation/image-restore",
+    href: "/transformation/add/image-restore",
     icon: Image,
   },
   {
     title: "Generative Fill",
-    href: "/transformation/generative-fill",
+    href: "/transformation/add/generative-fill",
     icon: PaintBucket,
   },
   {
     title: "Object Remove",
-    href: "/transformation/object-remove",
+    href: "/transformation/add/object-remove",
     icon: ScanFace,
   },
   {
     title: "Object Recolor",
-    href: "/transformation/object-recolor",
+    href: "/transformation/add/object-recolor",
     icon: Palette,
   },
   {
     title: "Background Remove",
-    href: "/transformation/background-remove",
+    href: "/transformation/add/background-remove",
     icon: ImageOff,
   },
   {
@@ -117,3 +117,28 @@ export const aspectRatioOptions = {
     height: 1778,
   },
 };
+
+export const creditFee = -1;
+
+export const navigationHome = [
+  {
+    title: "Image Restore",
+    href: "/transformation/add/image-restore",
+    icon: Image,
+  },
+  {
+    title: "Generative Fill",
+    href: "/transformation/add/generative-fill",
+    icon: PaintBucket,
+  },
+  {
+    title: "Object Remove",
+    href: "/transformation/add/object-remove",
+    icon: ScanFace,
+  },
+  {
+    title: "Object Recolor",
+    href: "/transformation/add/object-recolor",
+    icon: Palette,
+  },
+];

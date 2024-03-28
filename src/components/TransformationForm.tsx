@@ -6,8 +6,12 @@ import { Button } from "@/comp-ui/ui/button";
 import { Form } from "@/comp-ui/ui/form";
 import { Input } from "@/comp-ui/ui/input";
 import CustomField from "./CustomField";
-import { useState, useTransition } from "react";
-import { aspectRatioOptions, transformationTypes } from "@/lib/constant";
+import { useEffect, useState, useTransition } from "react";
+import {
+  aspectRatioOptions,
+  creditFee,
+  transformationTypes,
+} from "@/lib/constant";
 import FillField from "./specific-form/Fill";
 import Remove from "./specific-form/Remove";
 import Recolor from "./specific-form/Recolor";
@@ -17,6 +21,7 @@ import ImageUpload from "./specific-form/ImageUpload";
 import { getCldImageUrl } from "next-cloudinary";
 import { addImage, updateImage } from "@/lib/actions/image.actions";
 import { useRouter } from "next/navigation";
+import InsufficientCreditsModal from "./InsufficientCreditsModal";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -31,6 +36,7 @@ export default function TransformationForm({
   data = null,
   userId,
   type,
+  creditBalance,
   config = null,
 }: any) {
   const transformationType =
@@ -58,7 +64,7 @@ export default function TransformationForm({
   const [isTransforming, setIsTransforming] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState<any>(config);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,7 +80,7 @@ export default function TransformationForm({
         src: image?.publicId,
         width: image?.width,
         height: image?.height,
-        ...transformationConfig
+        ...transformationConfig,
       });
 
       const imageData = {
@@ -88,8 +94,8 @@ export default function TransformationForm({
         transformationUrl: transformationUrl,
         aspectRatio: values.aspectRatio,
         prompt: values.prompt,
-        color: values.color
-      }
+        color: values.color,
+      };
 
       if (action === "add") {
         try {
@@ -104,7 +110,6 @@ export default function TransformationForm({
             setImage(data);
             router.push(`/transformation/${newImage.id}`);
           }
-
         } catch (e) {
           console.log(e);
         }
@@ -115,7 +120,7 @@ export default function TransformationForm({
           const updatedImage = await updateImage({
             image: {
               ...imageData,
-              id: data.id
+              id: data.id,
             },
             userId,
             path: `/transformation/${data.id}`,
@@ -124,7 +129,6 @@ export default function TransformationForm({
           if (updatedImage) {
             router.push(`/transformation/${updatedImage.id}`);
           }
-
         } catch (e) {
           console.log(e);
         }
@@ -163,7 +167,7 @@ export default function TransformationForm({
     setNewTransformation(null);
 
     startTransition(async () => {
-      await updateCredits(userId, -1);
+      await updateCredits(userId, creditFee);
     });
   }
 
@@ -186,8 +190,18 @@ export default function TransformationForm({
     }, 1000);
   }
 
+  useEffect(() => {
+    if (
+      image &&
+      (transformationType.type === "restore" ||
+        transformationType.type === "removeBackground")
+    )
+      setNewTransformation(transformationType.config);
+  }, [image, transformationType.config, transformationType.type]);
+
   return (
     <Form {...form}>
+      {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <CustomField
           control={form.control}

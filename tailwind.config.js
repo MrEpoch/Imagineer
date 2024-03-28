@@ -19,6 +19,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         gradient: "var(--gradient)",
+        banner: "url('/Banner.png')",
       },
       colors: {
         border: "hsl(var(--border))",
