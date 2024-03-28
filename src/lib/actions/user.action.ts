@@ -37,9 +37,9 @@ export async function getUserById(id: string) {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id,
+        clerkId: id,
       },
-    });
+    })
 
     if (!user) throw new Error("");
 

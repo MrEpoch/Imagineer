@@ -3,7 +3,7 @@ import ThemeSignIn from "./ThemeSignIn";
 
 export default function SignInPage() {
   return (
-    <main className="dark:bg-darkmode-900 bg-white flex justify-center items-center min-h-screen w-full">
+    <main className="dark:bg-background bg-white flex justify-center items-center min-h-screen w-full">
       <ThemeSignIn />
     </main>
   );

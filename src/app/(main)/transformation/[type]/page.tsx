@@ -16,11 +16,15 @@ export default async function page({
   const { userId } = auth();
 
   if (!userId) {
-  }
-
-  if (!transformation) {
     redirect("/");
   }
+
+  const user = await getUserById(userId);
+
+  if (!user) {
+    redirect("/");
+  }
+
 
   return (
     <main className="min-h-screen">
@@ -32,7 +36,7 @@ export default async function page({
         <div className="mt-10">
           <TransformationForm
             action="add"
-            userId={"temp"}
+            userId={user.id}
             type={type as keyof typeof transformationTypes}
           />
         </div>

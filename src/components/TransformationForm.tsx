@@ -102,7 +102,7 @@ export default function TransformationForm({
           if (newImage) {
             form.reset();
             setImage(data);
-            router.push(`/transformations/${newImage.id}`);
+            router.push(`/transformation/${newImage.id}`);
           }
 
         } catch (e) {
@@ -118,11 +118,11 @@ export default function TransformationForm({
               id: data.id
             },
             userId,
-            path: `/transformations/${data.id}`,
+            path: `/transformation/${data.id}`,
           });
 
           if (updatedImage) {
-            router.push(`/transformations/${updatedImage.id}`);
+            router.push(`/transformation/${updatedImage.id}`);
           }
 
         } catch (e) {

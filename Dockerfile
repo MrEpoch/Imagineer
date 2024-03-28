@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 COPY next.config.mjs tsconfig.json ./
-COPY tailwind.config.ts postcss.config.js ./
+COPY tailwind.config.js postcss.config.js ./
 
 # Install dependencies
 RUN npm install
@@ -16,9 +16,13 @@ RUN npm install
 COPY . .
 
 # Generate Prisma client
+
+EXPOSE 5432
+
 RUN npx prisma generate
 
 # Expose port 3000
 EXPOSE 3000
+
 # Run the Next.js application
 CMD ["npm", "run", "dev"]
