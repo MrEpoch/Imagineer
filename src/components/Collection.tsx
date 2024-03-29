@@ -85,11 +85,7 @@ export default function Collection({
 
 function ImgCard({ image }: { image: ImagePrisma }) {
   const SvgIcon =
-    collectionSvg[
-      transformationTypes[
-        image.transformationType as keyof typeof transformationTypes
-      ].type as keyof typeof collectionSvg
-    ];
+    collectionSvg[Object.values(transformationTypes).filter(t => t.type === image.transformationType)[0].type];
 
   return (
     <li>
@@ -102,9 +98,9 @@ function ImgCard({ image }: { image: ImagePrisma }) {
         <CldImage
           src={image.publicId}
           alt={image.title}
-          widht={image.width}
+          width={image.width}
           height={image.height}
-          {...JSON.parse(image.config as string)}
+          {...image.config as Object}
           loading="lazy"
           className="h-52 w-full rounded-xl object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"

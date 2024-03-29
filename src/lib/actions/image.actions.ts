@@ -5,6 +5,8 @@ import { prisma } from "../db";
 import { redirect } from "next/navigation";
 import { AddImageParams } from "@/types/index";
 
+import { v2 as cloudinary } from "cloudinary";
+
 export async function addImage({ image, userId, path }: AddImageParams) {
   try {
     const author = await prisma.user.findUnique({
@@ -103,6 +105,9 @@ export async function getImageById({ image, userId, path }) {
         id: image.id,
         authorId: userId,
       },
+      include: {
+        author: true,
+      }
     });
 
     if (!getImage) throw new Error("Image not found");
@@ -115,6 +120,64 @@ export async function getImageById({ image, userId, path }) {
   }
 }
 
-export async function getAllImages({}) {
+export async function getAllImages({ limit = 9, page = 1, searchQuery = "" }: {
+  limit?: number;
+  page: number;
+  searchQuery?: string;
+}) {
+  try {
 
+    cloudinary.config({
+      cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+      secret: true
+    });
+
+    let expression = "folder=imagineer";
+
+    if (searchQuery) expression += ` AND ${searchQuery}`
+    
+    const { resources } = await cloudinary.search
+      .expression(expression)
+      .execute();
+
+    const resourceId = resources.map(resource => resource.public_id);
+
+    let query = {};
+
+    if (searchQuery) query = {
+      publicId: {
+        in: resourceId
+      }
+    }
+
+    const skipAmount = (Number(page)-1) * limit;
+
+    const images = await prisma.image.findMany({
+      where: query,
+      take: limit,
+      include: {
+        author: true
+      },
+      skip: skipAmount,
+      orderBy: {
+        createdAt: "desc",
+      },
+    })
+
+    const totalImages = await prisma.image.count({
+      where: query
+    })
+    const savedImages = await prisma.image.count();
+
+    return {
+      data: JSON.parse(JSON.stringify(images)),
+      totalPage: Math.ceil(totalImages / limit),
+      savedImages
+    }
+
+  } catch (e) {
+
+  }
 }

@@ -54,7 +54,7 @@ export default function TransformedImage({
             {...transformationConfig}
           />
           {isTransforming && (
-            <div className="items-center justify-center absolute left-[50%] top-[50%] w-full h-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-background/90">
+            <div className="items-center flex justify-center absolute left-[50%] top-[50%] w-full h-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-background/90">
               <Shell className="w-12 h-12 animate-spin" />
             </div>
           )}

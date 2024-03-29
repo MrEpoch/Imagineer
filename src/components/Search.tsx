@@ -36,7 +36,7 @@ export default function Search() {
   }, [router, searchParams, query]);
 
   return (
-    <div className="flex w-full rounded-2xl border-2 border-primary/20 dark:border-primary bg-white dark:bg-card px-4 shadow-sm shadow-primary/10 dark:shadow-primary/60 md:max-w-96">
+    <div className="flex items-center w-full rounded-2xl border-2 border-primary/20 dark:border-primary bg-white dark:bg-card px-4 shadow-sm shadow-primary/10 dark:shadow-primary/60 md:max-w-96">
       <SearchSVG className="w-6 h-6" />
       <Input
     className="border-0 bg-transparent text-gray-600 w-full placeholder:text-gray-400 h-12 text-sm font-medium focus-visible:ring-offset-0 p-3 focus-visible:ring-transparent"
