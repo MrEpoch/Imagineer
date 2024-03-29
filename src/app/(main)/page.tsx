@@ -1,7 +1,13 @@
-import { navigationHome } from "@/lib/constant";
+import Collection from "@/components/Collection";
+import { sidebar } from "@/lib/constant";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home({ searchParams }) {
+  const page = Number(searchParams?.page) || 1;
+  const searchQuery = (searchParams?.query as string) || "";
+
+;
+
   return (
     <main className="min-h-screen w-full">
       <div className="max-w-screen-xl h-full mx-auto flex flex-col py-8 px-4">
@@ -10,7 +16,7 @@ export default function Home() {
             Unleash your creativity with Imagineer
           </h1>
           <div className="flex gap-8">
-            {navigationHome.map((item) => (
+            {sidebar.slice(0, 3).map((item) => (
               <NavigationProp
                 key={item.title}
                 title={item.title}
@@ -22,6 +28,9 @@ export default function Home() {
               </NavigationProp>
             ))}
           </div>
+        </div>
+        <div className="w-full sm:mt-12">
+          <Collection />
         </div>
       </div>
     </main>

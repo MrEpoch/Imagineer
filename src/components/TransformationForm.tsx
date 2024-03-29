@@ -246,14 +246,14 @@ export default function TransformationForm({
             disabled={isTransforming || newTransformation === null}
             onClick={onTransformHandler}
             type="button"
-            className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px]"
+            className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 text-sm h-[50px] w-full md:h-[54px]"
           >
             {isTransforming ? "Transforming..." : "Apply transformation"}
           </Button>
           <Button
             disabled={isSubmitting}
             type="submit"
-            className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px]"
+            className="bg-gradient capitalize text-white font-bold bg-cover rounded-full py-4 px-6 text-sm h-[50px] w-full md:h-[54px]"
           >
             {isSubmitting ? "Submitting..." : "Save Image"}
           </Button>

@@ -120,25 +120,10 @@ export const aspectRatioOptions = {
 
 export const creditFee = -1;
 
-export const navigationHome = [
-  {
-    title: "Image Restore",
-    href: "/transformation/add/image-restore",
-    icon: Image,
-  },
-  {
-    title: "Generative Fill",
-    href: "/transformation/add/generative-fill",
-    icon: PaintBucket,
-  },
-  {
-    title: "Object Remove",
-    href: "/transformation/add/object-remove",
-    icon: ScanFace,
-  },
-  {
-    title: "Object Recolor",
-    href: "/transformation/add/object-recolor",
-    icon: Palette,
-  },
-];
+export const collectionSvg = {
+  removeBackground: ImageOff,
+  restore: Image,
+  fill: PaintBucket,
+  recolor: Palette,
+  remove: ScanFace,
+};

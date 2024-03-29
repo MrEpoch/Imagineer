@@ -114,3 +114,7 @@ export async function getImageById({ image, userId, path }) {
     throw new Error("Failed to get image: " + e);
   }
 }
+
+export async function getAllImages({}) {
+
+}

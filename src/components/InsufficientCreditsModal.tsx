@@ -21,7 +21,7 @@ export default function InsufficientCreditsModal() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <div className="items-center justify-between flex">
-            <p className="p-16 font-semibold">Insufficient credits</p>
+            <p className="text-sm font-semibold">Insufficient credits</p>
             <AlertDialogCancel className="border-0 p-0 hover:bg-transparent">
               <X className="w-6 h-6" />
             </AlertDialogCancel>
